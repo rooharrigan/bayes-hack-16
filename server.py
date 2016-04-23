@@ -1,5 +1,7 @@
 from jinja2 import StrictUndefined
 
+from helper import get_rec_areas
+from google-process import gets_min_travel_to_location_from_user
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -18,6 +20,11 @@ def index():
     """Homepage."""
 
     return render_template("home.html")
+
+@app.route('/search_results')
+def show_search_results():
+    """Shows search results from lat long"""
+
 
 
 @app.route("/login")

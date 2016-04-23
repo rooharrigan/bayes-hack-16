@@ -17,7 +17,8 @@ def get_rec_areas(latitude, longitude):
         name = locations["RecAreaName"]
         lat = locations["RecAreaLatitude"]
         lon = locations["RecAreaLongitude"]
-        rec_areas.append((name, lat, lon))
+        description = locations["RecAreaDescription"]
+        rec_areas.append((name, description, lat, lon))
 
     return rec_areas
 
