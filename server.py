@@ -1,7 +1,7 @@
 from jinja2 import StrictUndefined
 
 from helper import get_rec_areas
-from google-process import gets_min_travel_to_location_from_user
+from googleprocess import gets_min_travel_to_location_from_user
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -25,35 +25,17 @@ def index():
 def show_search_results():
     """Shows search results from lat long"""
 
+    lat = request.args.get("lat")
+
+    lng = request.args.get("lng")
+
+    rec_areas = get_rec_areas(lat, lng)
+
+    final = gets_min_travel_to_location_from_user(lat, lng, rec_areas)
+
+    return final
 
 
-@app.route("/login")
-def login_form():
-    """Render login form"""
-
-    return render_template("login.html")
-
-@app.route("/login_submission", methods=["POST"])
-def login_submission():
-    """Confirms username and password through database and sessions."""
-
-    email = request.form.get("email")
-    password = request.form.get("password")
-    user = User.query.filter(User.email == email).first()
-    if user:
-        if password == user.password:
-            session["current_user"] = email
-            flash("Logged in as %s" % (email))
-            return redirect("/") 
-        else:
-            flash("Incorrect password submitted")
-            return redirect("/login")  
-    else:
-        new_user = User(email=email, password=password, age="NULL", zipcode="NULL")
-        db.session.add(new_user)
-        db.session.commit()
-        flash("New user logged in as %s" % (email))
-        return redirect("/")
 
 
 

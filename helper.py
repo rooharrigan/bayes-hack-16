@@ -22,4 +22,3 @@ def get_rec_areas(latitude, longitude):
 
     return rec_areas
 
-print get_rec_areas("37.804364", "-122.271114")
